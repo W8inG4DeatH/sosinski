@@ -1,0 +1,169 @@
+// ---------------- 
+//     MIXINS
+// ----------------
+ 
+// Important
+
+@function calculateRem($size) {
+	$remSize: $size / 16px;
+	@return $remSize * 1rem;
+}
+@mixin font-size($size) {
+	font-size: $size;
+	font-size: calculateRem($size);
+}
+	
+// Prefix Content
+
+@mixin prefix($property, $value, $prefixes) {
+	$noPrefixes: false !default;
+	$prefixes: if($noPrefixes, false, $prefixes);
+	
+	#{$property}: $value;
+	@if $prefixes {
+		@each $prefix in $prefixes {
+			-#{$prefix}-#{$property}: $value;
+		}		
+	}
+}
+
+@mixin prefix-content($name) {
+
+    @keyframes #{$name} {
+        @content;
+    }
+
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+
+    @-o-keyframes #{$name} {
+        @content;
+    }
+
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+
+}
+
+// Selection
+@mixin selection($color, $bgcolor: invert($color), $element: "") {
+	#{$element}::-webkit-selection {
+		color: $color;
+		background-color: $bgcolor;
+	}
+	#{$element}::-moz-selection {
+		color: $color;
+		background-color: $bgcolor;
+	}
+	#{$element}::selection {
+		color: $color;
+		background-color: $bgcolor;
+	}
+}
+@mixin block-selection() {
+	@include prefix(user-select, none, webkit moz ms);
+	user-select: none;
+}
+
+// Center
+@mixin center() {
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+}
+
+// Background
+@mixin background($color, $image:"") {
+	background-color: $color;
+    background-image: url($image);
+    background-position: center top;
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+}
+
+// Link Colors
+@mixin link-colors($link, $hover, $active, $visited) {
+	a:link { color: $link !important; }
+	a:hover { color: $hover !important; }
+	a:active { color: $active !important; }
+	a:visited { color: $visited !important; }
+}
+
+// Opacity
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	filter: alpha(opacity=$opacity*100);
+}
+
+// Filter
+@mixin filter($wlasciwosci) {
+	@include prefix(filter, $wlasciwosci, webkit moz ms);
+}
+ 
+// Border-radius
+@mixin border-radius($color, $weight: 4px, $mode: ridge, $radiusLT: 5px, $radiusRT: 15px) {
+	@include prefix(border-radius, $radiusLT $radiusRT $radiusLT $radiusRT, webkit moz);
+	border-radius: $radiusLT $radiusRT $radiusLT $radiusRT;
+	border: $weight $mode $color;
+}
+
+// Box-shadow
+@mixin box-shadow($horizontalLength: 1px, $verticalLength: 1px, $blurRadius: 0px, $spreadRadius: 1px, $rgbaColor: rgba(0,0,0,0.65)) {
+	@include prefix(box-shadow, $horizontalLength $verticalLength $blurRadius $spreadRadius $rgbaColor, webkit moz);
+	box-shadow: $horizontalLength $verticalLength $blurRadius $spreadRadius $rgbaColor;
+}
+
+@mixin text-shadow($color, $x: 1px, $y: 1px, $radius: 0, $invert: false) {
+	@if $invert {
+		$x: $x * (-1);
+		$y: $y * (-1);
+	}
+	text-shadow: $x $y $radius $color;
+}
+
+// Transitions
+@mixin transition($props: all, $speed: 0.5s, $easing: linear) {
+	@include prefix(transition, $props $speed $easing, webkit moz o ms);
+	transition: $props $speed $easing;
+}
+
+// display: inline-block;
+@mixin inline-block {
+   display: inline-block;
+   *display: inline;
+   zoom: 1;
+}
+
+// FixedCover // margin[%] -> marginbottom <= 2.5 * margin
+@mixin fixed-cover ($margin: 0, $marginbottom: $margin, $padding: 1%, $zindex: 1000) {
+	position:fixed;
+    margin: $margin $margin $marginbottom $margin;
+    padding: $padding;
+    top: 0;
+    left: 0;
+    $p100: 100%;
+    width: unquote("calc( #{$p100} - #{$margin} - #{$margin} )");
+    height: unquote("calc( #{$p100} - #{$margin} - #{$marginbottom} )");
+    z-index: $zindex;	
+}
+
+// Button 3D
+@mixin button-3d ($deep: 3px, $speed: 0.1) {
+	@include transition($speed);
+	&:active {
+		top: $deep;
+	}
+}
+
+// Dotted Line
+@mixin dotted-line ($color: #333, $border: 2px) {
+	border: $border dotted $color;
+    border-style: none none dotted; 
+}
+
