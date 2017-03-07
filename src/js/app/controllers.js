@@ -48,8 +48,8 @@
 
                     var siteArticle = $('#site-article').offset().top - windowScrollTop;
  
-                    if (siteContact <= 0) {
-                        // console.log('siteContact');
+                    if (siteArticle <= 0) {
+                        // console.log('siteArticle');
                         // bgImage.attr('src', 'img/bg_'+3+'.jpg');
                         bgImageContainer.removeClass('bg-container-1').addClass('bg-container-2');
                         $scope.activeSelector = '#site-article';
