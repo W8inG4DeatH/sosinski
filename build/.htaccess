@@ -1,4 +1,4 @@
-ErrorDocument 404 http://www.wifi-tv.pl
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^wifi-tv.pl$ [NC]
-RewriteRule ^(.*)$ http://www.wifi-tv.pl/$1 [R=301,L]
+ErrorDocument 404 http://www.sosinski.pl
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^sosinski.pl$ [NC]
+RewriteRule ^(.*)$ http://www.sosinski.pl/$1 [R=301,L]

@@ -15,7 +15,7 @@
             });            
 
         $locationProvider
-            .html5Mode(true);
+            .html5Mode(true); 
             
     }]);
  
